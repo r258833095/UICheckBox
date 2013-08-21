@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum
+{
+    UICheckBoxTpyeDefault = 0, //默认，按钮在左方
+    UICheckBoxTpyeBtnOnRight,  //按钮在右方，仅一行支持6个中文，num无效
+    UICheckBoxTpyeBtnAtBottom, //按钮在底部，自动排列
+    
+}CheckBoxType;
+
 @interface UICheckBox : UIView{
     
     NSArray *arLblName;
@@ -21,7 +29,8 @@
 
 - (void)setMultiple:(BOOL)selMultiple;
 
-- (void)setHorizontally:(int)num;// 1:默认支持15个中文 2:支持6个中文 3：支持3个中文
+- (void)setType:(CheckBoxType)type;
+
 
 - (void)setBtnBackgroundImage:(UIImage *)image forState:(UIControlState)state;
 
