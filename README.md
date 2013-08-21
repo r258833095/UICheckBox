@@ -19,12 +19,12 @@ UICheckBox
 
 example
 ==========
-    NSArray *arLbl =[[NSArray alloc]initWithObjects:@"1",@"2",@"3", nil];
+    NSArray *arLbl =[[NSArray alloc]initWithObjects:@"帐户",@"余额查询",@"我勒个去撒", nil];
     UICheckBox *chk =[[UICheckBox alloc]initWithAr:arLbl];
     chk.frame=CGRectMake(0, 0, 320, 100);
     [chk setMultiple:YES];
     [chk setBtnBackgroundImage:[UIImage imageNamed:@"btn_check_off.png"] forState:UIControlStateNormal];
     [chk setBtnBackgroundImage:[UIImage imageNamed:@"btn_check_on.png"] forState:UIControlStateHighlighted];
     [chk setBtnBackgroundImage:[UIImage imageNamed:@"btn_check_on.png"] forState:UIControlStateSelected];
-    [chk setHorizontally:3];
+    [chk setType:UICheckBoxTpyeBtnOnRight];
     [self.view addSubview:chk];
