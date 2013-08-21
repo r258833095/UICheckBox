@@ -27,21 +27,23 @@ static NSInteger row;
     
     for (int index=0; index<row ; index++) {
         
-       
-    UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(14, 16+35*index, 30, 30)];
-    [btn setTag:index+1];
-    [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:btn];
-                
-                
-    UILabel *lbl=[[UILabel alloc]initWithFrame:CGRectMake(52, 20+35*index, 255, 21)];
-    lbl.tag=index+11;
-    lbl.font=[UIFont systemFontOfSize:17];
-    lbl.text=[arLblName objectAtIndex:index];
-    lbl.textColor=[UIColor blackColor];
-    lbl.backgroundColor=[UIColor clearColor];
-    [self addSubview:lbl];
-  
+        
+        UIButton *btn=[[UIButton alloc]initWithFrame:CGRectMake(0, 0+35*index, 30, 30)];
+        [btn setTag:index+1];
+        [btn addTarget:self action:@selector(btnAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self addSubview:btn];
+        
+        
+        
+        UILabel *lbl=[[UILabel alloc]initWithFrame:CGRectMake(38, 4+35*index, 255, 21)];
+        lbl.tag=index+11;
+        lbl.textAlignment = NSTextAlignmentLeft;
+        lbl.font=[UIFont systemFontOfSize:17];
+        lbl.text=[arLblName objectAtIndex:index];
+        lbl.textColor=[UIColor blackColor];
+        lbl.backgroundColor=[UIColor clearColor];
+        [self addSubview:lbl];
+        
         
     }
     
@@ -65,34 +67,74 @@ static NSInteger row;
     multiple = selMultiple;
 }
 
-- (void)setHorizontally:(int)num{
-
-    switch (num) {
-        case 2:
+- (void)setType:(CheckBoxType)type{
+    
+    switch (type) {
+            
+        case UICheckBoxTpyeBtnOnRight:
             for (int index=0; index<row ; index++) {
                 UIButton *btn = (UIButton*)[self viewWithTag:index+1];
-                btn.frame=CGRectMake((index%2==0?14:166), 16+35*(index/2), 30, 30);
+                btn.frame=CGRectMake(110, 0+35*index, 30, 30);
                 
                 
                 UILabel *lbl = (UILabel*)[self viewWithTag:index+11];
-                lbl.frame=CGRectMake((index%2==0?52:204), 20+35*(index/2), 102, 21);
+                lbl.frame=CGRectMake(0, 4+35*index, 102, 21);
+                lbl.textAlignment = NSTextAlignmentLeft;
             }
             break;
-        case 3:
+            
+        case UICheckBoxTpyeBtnAtBottom:
             for (int index=0; index<row ; index++) {
-                UIButton *btn = (UIButton*)[self viewWithTag:index+1];
-                btn.frame=CGRectMake(14+(index%3)*98, 16+35*(index/3), 30, 30);
-                
-                
                 UILabel *lbl = (UILabel*)[self viewWithTag:index+11];
-                lbl.frame=CGRectMake(52+(index%3)*98, 20+35*(index/3), 58, 21);
+                lbl.textAlignment = NSTextAlignmentCenter;
+                CGSize sizeName = [lbl.text sizeWithFont:lbl.font
+                                       constrainedToSize:CGSizeMake(MAXFLOAT, 0.0)
+                                           lineBreakMode:NSLineBreakByWordWrapping];
+                
+                if (sizeName.width < 34) {//小于34直接赋值为34
+                    sizeName.width = 34;
+                }
+                
+                if (index == 0) {
+                    
+                    lbl.frame=CGRectMake(0 , 0 , sizeName.width , 21);
+                    
+                }else{
+                    
+                    UILabel *lblFront = (UILabel*)[self viewWithTag:index+10];
+                    float widthLbl = lblFront.frame.origin.x + lblFront.frame.size.width + 8 + sizeName.width;
+                    
+                    if (widthLbl < self.frame.size.width) {//判断文本尾部是否超过宽度
+                        
+                        lbl.frame=CGRectMake(lblFront.frame.origin.x + lblFront.frame.size.width + 8 , lblFront.frame.origin.y , sizeName.width , 21);
+                        
+                    }else{
+                        
+                        lbl.frame=CGRectMake(0 , lblFront.frame.origin.y + 57 , sizeName.width , 21);
+                        
+                    }
+                    
+                }
+                
+                UIButton *btn = (UIButton*)[self viewWithTag:index+1];
+                //按钮位置=文本w/2+文本x-按钮宽/2
+                float btnX = sizeName.width / 2 + lbl.frame.origin.x - 30 / 2;
+                float btnY = lbl.frame.origin.y + 20;
+                btn.frame=CGRectMake(btnX, btnY, 30, 30);
+                
             }
             break;
         default:
+            for (int index=0; index<row ; index++) {
+                UIButton *btn = (UIButton*)[self viewWithTag:index+1];
+                btn.frame=CGRectMake(0, 0+35*index, 30, 30);
+                
+                UILabel *lbl = (UILabel*)[self viewWithTag:index+11];
+                lbl.frame=CGRectMake(38, 4+35*index, 255, 21);
+                lbl.textAlignment = NSTextAlignmentLeft;
+            }
             break;
     }
-
-    
 
 }
 
