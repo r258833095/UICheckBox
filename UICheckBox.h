@@ -19,18 +19,18 @@ typedef enum
 @interface UICheckBox : UIView{
     
     NSArray *arLblName;
-    
-    BOOL multiple;
+
 }
 
 @property (nonatomic,retain)NSString *strSel;
+@property (nonatomic,assign)BOOL multiple;
+
 
 - (id)initWithAr:(NSArray*)arLbl;
 
-- (void)setMultiple:(BOOL)selMultiple;
+- (void)setLblFontSize:(int)fontSize;
 
 - (void)setType:(CheckBoxType)type;
-
 
 - (void)setBtnBackgroundImage:(UIImage *)image forState:(UIControlState)state;
 

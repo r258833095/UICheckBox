@@ -10,6 +10,8 @@
 
 @implementation UICheckBox
 @synthesize strSel;
+@synthesize multiple;
+
 
 static NSInteger row;
 - (id)initWithAr:(NSArray *)arLbl
@@ -47,7 +49,6 @@ static NSInteger row;
         
     }
     
-    
 }
 
 - (void)btnAction:(UIButton*)btn{
@@ -63,8 +64,12 @@ static NSInteger row;
     
 }
 
-- (void)setMultiple:(BOOL)selMultiple{
-    multiple = selMultiple;
+- (void)setLblFontSize:(int)fontSize{
+    
+    for (int index=0; index<row ; index++) {
+        UILabel *lbl = (UILabel*)[self viewWithTag:index+11];
+        lbl.font=[UIFont systemFontOfSize:fontSize];
+    }
 }
 
 - (void)setType:(CheckBoxType)type{
@@ -135,7 +140,7 @@ static NSInteger row;
             }
             break;
     }
-
+    
 }
 
 - (void)setBtnBackgroundImage:(UIImage *)image forState:(UIControlState)state{
